@@ -26,3 +26,23 @@
     @tailwind components;
     @tailwind utilities;
     ```
+
+### Running Migrations
+ ```sh
+ php artisan migrate
+ ```
+
+### Preventing CSRF Request
+
+Laravel automatically generates a CSRF "token" for each active user session managed by the application
+
+Anytime you define an HTML form in your application, you should include a hidden CSRF _token field in the form so that the CSRF protection middleware can validate the request.
+
+```sh
+<form method="POST" action="/profile">
+    @csrf
+
+    <!-- Equivalent to... -->
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+</form>
+```
