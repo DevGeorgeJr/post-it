@@ -24,7 +24,7 @@
         <ul class="flex items-ceneter">
             @auth
                 <li>
-                    <a href="" class="p-3">George</a>
+                    <a href="" class="p-3">{{ Auth::user()->name }}</a>
                 </li>
                 <li>
                     <form action="{{ route('logout') }}" 
