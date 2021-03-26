@@ -61,3 +61,26 @@ if (Auth::attempt(array('email' => $email, 'password' => $password), true))
     // The user is being remembered...
 }
 ```
+
+### [Laravel Collections](https://laravel.com/docs/8.x/collections)
+
+The Illuminate\Support\Collection class provides a fluent, convenient wrapper for working with arrays of data.
+
+### Eloquent: Relationships
+
+Database tables are often related to one another. For example, a blog post may have many comments or an order could be related to the user who placed it. Eloquent makes managing and working with these relationships easy, and supports a variety of common relationships:
+
+## One To Many
+
+A one-to-many relationship is used to define relationships where a single model is the parent to one or more child models.
+
+one-to-many relationships are defined by defining a method
+```sh
+class User extends Authenticatable
+{
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+}
+```
