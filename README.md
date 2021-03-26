@@ -62,15 +62,15 @@ if (Auth::attempt(array('email' => $email, 'password' => $password), true))
 }
 ```
 
-### [Laravel Collections](https://laravel.com/docs/8.x/collections)
+## [Laravel Collections](https://laravel.com/docs/8.x/collections)
 
 The Illuminate\Support\Collection class provides a fluent, convenient wrapper for working with arrays of data.
 
-### Eloquent: Relationships
+### [Eloquent: Relationships](https://laravel.com/docs/8.x/eloquent-relationships#one-to-many)
 
 Database tables are often related to one another. For example, a blog post may have many comments or an order could be related to the user who placed it. Eloquent makes managing and working with these relationships easy, and supports a variety of common relationships:
 
-## One To Many
+### One To Many
 
 A one-to-many relationship is used to define relationships where a single model is the parent to one or more child models.
 
