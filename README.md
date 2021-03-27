@@ -84,3 +84,24 @@ class User extends Authenticatable
     }
 }
 ```
+
+
+## [Model Factories](https://laravel.com/docs/8.x/database-testing#concept-overview)
+Laravel comes with a feature called model factories that are designed to quickly build out "fake" models. When testing, you may need to insert a few records into your database before executing your test. Instead of manually specifying the value of each column when you create this test data, Laravel allows you to define a set of default attributes for each of your Eloquent models using model factories.
+
+```sh
+    public function definition()
+    {
+        return [
+         'body' => $this->faker->sentence(20)
+        ];
+    }   
+```
+
+access php artisan tinker and generate record 
+
+```sh
+    php artisan tinker
+        
+    App\Models\Post::factory()->times(200)->create(['user_id' => 1]);
+```
