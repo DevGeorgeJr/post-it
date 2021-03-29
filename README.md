@@ -90,41 +90,54 @@ class User extends Authenticatable
 Laravel comes with a feature called model factories that are designed to quickly build out "fake" models. When testing, you may need to insert a few records into your database before executing your test. Instead of manually specifying the value of each column when you create this test data, Laravel allows you to define a set of default attributes for each of your Eloquent models using model factories.
 
 ```sh
-    public function definition()
-    {
-        return [
-         'body' => $this->faker->sentence(20)
-        ];
-    }   
+public function definition()
+{
+    return [
+        'body' => $this->faker->sentence(20)
+    ];
+}   
 ```
 
 access php artisan tinker and generate record 
 
 ```sh
-    php artisan tinker
-        
-    App\Models\Post::factory()->times(200)->create(['user_id' => 1]);
+php artisan tinker
+    
+App\Models\Post::factory()->times(200)->create(['user_id' => 1]);
 ```
 
 ### [Route Model Binding](https://laravel.com/docs/8.x/routing#route-model-binding)
 
  Laravel route model binding provides a convenient way to automatically inject the model instances directly into your routes.
  ```sh
-  Route::post('/posts/{post}/likes', [PostLikeController::class, 'store'])->name('posts.likes');
+Route::post('/posts/{post}/likes', [PostLikeController::class, 'store'])->name('posts.likes');
 
-  <form action="{{ route('posts.likes', $post) }}" method="post" class="mr-1">
+<form action="{{ route('posts.likes', $post) }}" method="post" class="mr-1">
     @csrf
     <button type="submit" class="text-blue-500">Like</button>
-  </form>
+</form>
 
-  public function store(Post $post, Request $request)
+public function store(Post $post, Request $request)
  ```
 
  ### [Form Method Spoofing](https://laravel.com/docs/8.x/routing#form-method-spoofing)
  ```sh
-    <form action="{{ route('posts.likes', $post) }}" method="post" class="mr-1">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="text-blue-500">Unlike</button>
-    </form>
+<form action="{{ route('posts.likes', $post) }}" method="post" class="mr-1">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="text-blue-500">Unlike</button>
+</form>
  ```
+
+### [Laravel Debug Bar](https://github.com/barryvdh/laravel-debugbar)
+
+```sh
+composer require barryvdh/laravel-debugbar --dev
+```
+
+### [Eager Loading](https://laravel.com/docs/8.x/eloquent-relationships#eager-loading)
+Eager loading is a concept in which when retrieving items, you get all the needed items together with all (or most) related items at the same time.
+
+```sh
+$posts = Post::with(['user', 'likes'])->paginate(20);
+```
