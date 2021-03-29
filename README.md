@@ -105,3 +105,26 @@ access php artisan tinker and generate record
         
     App\Models\Post::factory()->times(200)->create(['user_id' => 1]);
 ```
+
+### [Route Model Binding](https://laravel.com/docs/8.x/routing#route-model-binding)
+
+ Laravel route model binding provides a convenient way to automatically inject the model instances directly into your routes.
+ ```sh
+  Route::post('/posts/{post}/likes', [PostLikeController::class, 'store'])->name('posts.likes');
+
+  <form action="{{ route('posts.likes', $post) }}" method="post" class="mr-1">
+    @csrf
+    <button type="submit" class="text-blue-500">Like</button>
+  </form>
+
+  public function store(Post $post, Request $request)
+ ```
+
+ ### [Form Method Spoofing](https://laravel.com/docs/8.x/routing#form-method-spoofing)
+ ```sh
+    <form action="{{ route('posts.likes', $post) }}" method="post" class="mr-1">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="text-blue-500">Unlike</button>
+    </form>
+ ```
