@@ -160,7 +160,8 @@ they may not be authorized to update or delete certain Eloquent models or databa
 Laravel's authorization features provide an easy, organized way of managing these types of authorization checks.
 
 ```sh
-php artisan make:policy PostPolicy
+Artisan Command
+ php artisan make:policy PostPolicy
 
 AuthServiceProvider.php
     protected $policies = [
@@ -184,4 +185,26 @@ views posts - index.blade.php
             <button type="submit" class="text-blue-500">Delete</button>
         </form>
     @endcan
+```
+
+
+### [Components](https://laravel.com/docs/8.x/blade#components)
+
+Components and slots provide similar benefits to sections, layouts, and includes; 
+however, some may find the mental model of components and slots easier to understand.
+
+```sh
+Artisan Command
+ php artisan make:component Post
+
+components - post.blade.php
+ @props(['post' => $post])
+ Paste the repeating div section
+
+views posts - index.blade.php
+ Replace the content with
+    @foreach ($posts as $post)
+        <x-post :post="$post"/>
+    @endforeach
+
 ```
