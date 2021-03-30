@@ -36,7 +36,8 @@
 
 Laravel automatically generates a CSRF "token" for each active user session managed by the application
 
-Anytime you define an HTML form in your application, you should include a hidden CSRF _token field in the form so that the CSRF protection middleware can validate the request.
+Anytime you define an HTML form in your application, 
+you should include a hidden CSRF _token field in the form so that the CSRF protection middleware can validate the request.
 
 ```sh
 <form method="POST" action="/profile">
@@ -53,7 +54,10 @@ Middleware provide a convenient mechanism for inspecting and filtering HTTP requ
 
 ### Authenticating A User And "Remembering" Them
 
-If you would like to provide "remember me" functionality in your application, you may pass true as the second argument to the attempt method, which will keep the user authenticated indefinitely (or until they manually logout). Of course, your users table must include the string remember_token column, which will be used to store the "remember me" token.
+If you would like to provide "remember me" functionality in your application, 
+you may pass true as the second argument to the attempt method, 
+which will keep the user authenticated indefinitely (or until they manually logout). 
+Of course, your users table must include the string remember_token column, which will be used to store the "remember me" token.
 
 ```sh
 if (Auth::attempt(array('email' => $email, 'password' => $password), true))
@@ -68,7 +72,9 @@ The Illuminate\Support\Collection class provides a fluent, convenient wrapper fo
 
 ### [Eloquent: Relationships](https://laravel.com/docs/8.x/eloquent-relationships#one-to-many)
 
-Database tables are often related to one another. For example, a blog post may have many comments or an order could be related to the user who placed it. Eloquent makes managing and working with these relationships easy, and supports a variety of common relationships:
+Database tables are often related to one another. 
+For example, a blog post may have many comments or an order could be related to the user who placed it. 
+Eloquent makes managing and working with these relationships easy, and supports a variety of common relationships:
 
 ### One To Many
 
@@ -87,7 +93,10 @@ class User extends Authenticatable
 
 
 ## [Model Factories](https://laravel.com/docs/8.x/database-testing#concept-overview)
-Laravel comes with a feature called model factories that are designed to quickly build out "fake" models. When testing, you may need to insert a few records into your database before executing your test. Instead of manually specifying the value of each column when you create this test data, Laravel allows you to define a set of default attributes for each of your Eloquent models using model factories.
+Laravel comes with a feature called model factories that are designed to quickly build out "fake" models. 
+When testing, you may need to insert a few records into your database before executing your test. 
+Instead of manually specifying the value of each column when you create this test data, 
+Laravel allows you to define a set of default attributes for each of your Eloquent models using model factories.
 
 ```sh
 public function definition()
@@ -136,8 +145,43 @@ composer require barryvdh/laravel-debugbar --dev
 ```
 
 ### [Eager Loading](https://laravel.com/docs/8.x/eloquent-relationships#eager-loading)
-Eager loading is a concept in which when retrieving items, you get all the needed items together with all (or most) related items at the same time.
+Eager loading is a concept in which when retrieving items, 
+you get all the needed items together with all (or most) related items at the same time.
 
 ```sh
 $posts = Post::with(['user', 'likes'])->paginate(20);
+```
+
+### [Authorization](https://laravel.com/docs/8.x/authorization)
+
+Laravel also provides a simple way to authorize user actions against a given resource. 
+For example, even though a user is authenticated, 
+they may not be authorized to update or delete certain Eloquent models or database records managed by your application. 
+Laravel's authorization features provide an easy, organized way of managing these types of authorization checks.
+
+```sh
+php artisan make:policy PostPolicy
+
+AuthServiceProvider.php
+    protected $policies = [
+        Post::class => PostPolicy::class,
+    ];
+
+PostController.php
+    public function destroy(Post $post)
+    {
+        $this->authorize('delete', $post);
+        $post->delete();
+
+        return back();
+    }
+
+views posts - index.blade.php
+    @can('delete', $post)
+        <form action="{{ route('posts.destroy',  $post) }}" method="post">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="text-blue-500">Delete</button>
+        </form>
+    @endcan
 ```
