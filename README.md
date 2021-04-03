@@ -98,6 +98,7 @@ When testing, you may need to insert a few records into your database before exe
 Instead of manually specifying the value of each column when you create this test data, 
 Laravel allows you to define a set of default attributes for each of your Eloquent models using model factories.
 
+database\factories\PostFactory.php
 ```sh
 public function definition()
 {
